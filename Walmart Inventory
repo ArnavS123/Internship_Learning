@@ -1,0 +1,51 @@
+import os
+
+def read_inventory(file_name):
+    inventory = {}
+    with open(file_name, 'r') as file:
+        for line in file:
+            item, aisle, section, number = line.strip().split(', ')
+            inventory[item] = [int(number), (int(aisle), int(section))]
+    
+    return(inventory)
+
+def write_output(file_name, content):
+    with open(file_name, 'w') as file:
+        file.write(content)
+
+def information(inventory):
+    return_str = ""
+    for ind, (number, coordinates) in enumerate(inventory.values()):
+        item = list(inventory.keys())[ind]
+        return_str += f"{number} {item} at aisle {coordinates[0]} section {coordinates[1]}\n"
+    
+    return(return_str)
+
+def compare(inventory, inventory2):
+    return_str = "Both inventories share: \n"
+    set1 = set(inventory.keys())
+    set2 = set(inventory2.keys())
+    union = set1 & set2
+
+    for item in list(union):
+        return_str += f" - {item}\n"
+    
+    return(return_str)
+
+if __name__ == "__main__":
+    inventory = read_inventory("inventory.txt")
+    inventory2 = read_inventory("inventory2.txt")
+    
+    inventory_info = information(inventory)
+    inventory2_info = information(inventory2)
+    comparison_info = compare(inventory, inventory2)
+    
+    print(inventory_info)
+    print(inventory2_info)
+    print(comparison_info)
+    
+    output_file = "output.txt"
+    output_content = inventory_info + "\n" + inventory2_info + "\n" + comparison_info
+    
+    write_output(output_file, output_content)
+    os.startfile(output_file)
