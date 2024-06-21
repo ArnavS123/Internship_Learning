@@ -1,0 +1,4 @@
+fig, 3, 2, 6
+grape, 4, 1, 7
+apple, 1, 1, 8
+banana, 1, 2, 9
