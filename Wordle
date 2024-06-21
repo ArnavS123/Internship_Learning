@@ -1,0 +1,40 @@
+word = "Arnav".lower()
+word_size = len(word)
+max_attempts = 6
+
+def Guess():
+    while True:
+        guess = input(f"Enter a {word_size}-letter word -> ").lower()
+        if len(guess) == word_size:
+            return(guess)
+        else:
+            print(f"Error! Word must be {word_size} letters long...")
+
+def Wordle():
+    attempts = 0
+
+    while attempts < max_attempts:
+        guess = Guess()
+        attempts += 1
+        feedback = ""
+
+        for ind, char in enumerate(guess):
+            if char == word[ind]:
+                feedback += char.upper()
+            elif char in word:
+                feedback += char.lower()
+            else:
+                feedback += "_"
+            
+        print(feedback)
+
+        if guess == word:
+            print(f"Congratulations! You correctly guessed the word to be {word.upper()}!")
+            break
+        else:
+            print(f"You have {max_attempts - attempts} guesses left.")
+    
+    if attempts == max_attempts and guess != word:
+        print(f"You ran out guesses! The correct answer was {word.upper()}.")
+
+Wordle()
